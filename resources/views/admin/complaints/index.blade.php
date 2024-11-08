@@ -1,6 +1,14 @@
-@extends('layouts.base-front2')
+@extends('layouts.base-app')
 
-@section('title', 'Semua Pengaduan')
+@if (Route::currentRouteName() === 'admin.all.complaints')
+    @section('title', 'Semua Pengaduan')
+@elseif (Route::currentRouteName() === 'admin.all.pending.complaints')
+    @section ('title', 'Semua Pengaduan Pending')
+@elseif (Route::currentRouteName() === 'admin.all.process.complaints')
+    @section ('title', 'Semua Pengaduan Proses')
+@elseif (Route::currentRouteName() === 'admin.all.success.complaints')
+    @section ('title', 'Semua Pengaduan Sukses')
+@endif
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('mazer/assets/extensions/simple-datatables/style.css') }}">
@@ -73,62 +81,51 @@
 @section('content')
 <div class="page-heading">
     <h3>Semua Pengaduan</h3>
+    <p>Semua aduan masyarakat akan ditampilkan disini</p>
 </div>
 <section id="multiple-column-form">
     <div class="row match-height">
         <div class="col-12">
             <div class="card shadow-sm">
-                <div class="card-header text-center text-uppercase bg-primary text-white">
+                <div class="card-header bg-primary text-white">
                     <h4 class="card-title">Daftar Pengaduan Masyarakat</h4>
                 </div>
                 <div class="card-content">
                     <div class="card-body">
-                        <table class="table table-striped" id="pengaduan">
+                        <table class="table" id="myTable">
                             <thead class="table-light">
                                 <tr>
                                     <th>Gambar</th>
                                     <th>Nama Pengadu</th>
                                     <th>Judul Pengaduan</th>
                                     <th>Status</th>
+                                    <th>Action</th> 
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($data as $value)    
+                                @foreach($data as $value)
                                 <tr>
-                                    <td><img src="{{ $value->image }}" alt="{{ $value->title }}"></td>
-                                    <td>{{ $value->user->name ?? $value->guest_name }}</td>
-                                    <td>{{ $value->title }}</td>
-                                    <td><span class="badge"
-                                    style="background-color: 
-                                    @if($value->status == 'pending') #ff7976
-                                    @elseif($value->status == 'selesai') #5ddab4
-                                    @else #57caeb
-                                    @endif">{{ strtoupper($value->status) }}</span></td>
-                                </tr>
-                                @empty
-                                <tr>
-                                    <td colspan="4">Belum ada pengaduan</td>
-                                </tr>
-                                @endforelse
-                            </tbody>
-                                {{-- <tr>
                                     <td><img src="https://via.placeholder.com/50" alt="Gambar 1"></td>
-                                    <td>John Doe</td>
-                                    <td>Pengaduan Kebersihan</td>
-                                    <td><span class="badge bg-success">Selesai</span></td>
+                                    <td>
+                                        {{ $value->user->name ?? $value->guest_name }}
+                                    </td>
+                                    <td>
+                                        {{ $value->title }}
+                                    </td>
+                                    <td><span class="badge"
+                                        style="background-color:
+                                            @if($value->status == 'pending') 
+                                                #ff7976
+                                            @elseif($value->status == 'selesai')
+                                                #5ddab4
+                                            @else
+                                                #57caeb
+                                            @endif">
+                                            {{ strtoupper($value->status) }}
+                                    </span></td>
+                                    <td class="text-center"><a href="{{ route('response-complaint', $value->id) }}">Tanggapi</a></td>
                                 </tr>
-                                <tr>
-                                    <td><img src="https://via.placeholder.com/50/ff7f7f" alt="Gambar 2"></td>
-                                    <td>Jane Smith</td>
-                                    <td>Pengaduan Lalu Lintas</td>
-                                    <td><span class="badge bg-warning">Pending</span></td>
-                                </tr>
-                                <tr>
-                                    <td><img src="https://via.placeholder.com/50/7f7fff" alt="Gambar 3"></td>
-                                    <td>Ali Ahmad</td>
-                                    <td>Pengaduan Kerusakan Jalan</td>
-                                    <td><span class="badge bg-danger">Dalam Proses</span></td>
-                                </tr> --}}
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

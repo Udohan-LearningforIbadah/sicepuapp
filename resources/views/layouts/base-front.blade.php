@@ -23,4 +23,3 @@
     
     <script src="{{asset('mazer/assets/compiled/js/app.js')}}"></script>
 </body>
-</html>

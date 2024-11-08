@@ -6,6 +6,16 @@
                     <img src="{{ asset('images/adu.png') }}" class="img-fluid logo-pengaduan" alt="Logo">
                 </a>
             </div>
+            @if(Auth::check())
+            <a href="
+                @if(Auth::user()->role == 'admin')
+                    {{ route('admin.index') }}
+                @else
+                    #
+                @endif
+            " class="btn btn-primary">Menuju fitur</a>
+            @endif
+
             <div class="header-top-right">
 
                 @if(Auth::check())
@@ -40,24 +50,24 @@
     <nav class="main-navbar">
         <div class="container d-flex justify-content-center align-items-center">
             <ul>
-                <li class="menu-item">
-                    <a href="index.html" class='menu-link'>
+                <li class="menu-item {{ request()->routeIs('guest.formcomplaint') ? 'active' : '' }}">
+                    <a href="{{ route('guest.formcomplaint') }}" class='menu-link'>
                         <div><i class="bi bi-card-checklist fs-5 me-2"></i> Form Pengaduan</div>
                     </a>
                 </li>  
 
-                <li class="menu-item">
-                    <a href="index.html" class='menu-link'>
+                <li class="menu-item {{ request()->routeIs('guest.complaints') ? 'active' : '' }}">
+                    <a href="{{ route('guest.complaints') }}" class='menu-link'>
                         <div><i class="bi bi-newspaper fs-5 me-2"></i> Semua Pengaduan</div>
                     </a>
                 </li>                         
 
-                <li class="menu-item active">
-                    <a href="index.html" class='menu-link'>
+                <li class="menu-item {{ request()->routeIs('guest.statistics') ? 'active' : '' }}">
+                    <a href="{{ route('guest.statistics') }}" class='menu-link'>
                         <div><i class="bi bi-graph-up fs-5 me-2"></i> Data Statistik</div>
                     </a>
                 </li>                         
             </ul>
         </div>
-    </nav>n
+    </nav>
 </header>

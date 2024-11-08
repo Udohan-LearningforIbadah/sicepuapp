@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use app\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
 class AdminSeeder extends Seeder
@@ -15,10 +15,10 @@ class AdminSeeder extends Seeder
     public function run(): void
     {
         $user = new User();
-        $user->name = 'Admin no_123';
+        $user->name = 'Admin 124';
         $user->email = 'admin123@gmail.com';
         $user->password = Hash::make('admin123');
-        $user->telp= '123456789';
+        $user->telp= '12345678';
         $user->role = 'admin';
         $user->save();
     }
